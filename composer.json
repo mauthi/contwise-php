@@ -3,7 +3,7 @@
     "description": "API Wrapper for the Contwise Infra API",
     "type": "library",
     "require": {
-        "guzzlehttp/guzzle": "^7.5",
+        "guzzlehttp/guzzle": "^7.0.1",
         "caseyamcl/guzzle_retry_middleware": "^2.7",
         "vlucas/phpdotenv": "^5.5"
     },
