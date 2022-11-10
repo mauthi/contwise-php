@@ -11,9 +11,9 @@ use Contwise\Exceptions\ContwiseException;
  * @namespace    Contwise\Resources
  * @author     Mauthi <mauthi@gmail.com>
  */
-class FeaturesResource extends AbstractResource implements ResourceInterface
+class Feature extends AbstractResource implements ResourceInterface
 {
-    const RESOURCE_URL = 'trackmanagement/serviceobject/search';
+    const RESOURCE_URL = 'web/api/trackmanagement/serviceobject/search';
     const RESOURCE_KEY = 'features';
 
     /**
@@ -24,7 +24,7 @@ class FeaturesResource extends AbstractResource implements ResourceInterface
         parent::__construct($connection, self::RESOURCE_URL);
     }
 
-    public function getByNumber(String $number)
+    public function getByNumber(String $number) :array
     {
         $url = self::RESOURCE_URL;
         $data = [

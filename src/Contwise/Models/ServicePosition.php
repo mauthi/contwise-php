@@ -3,12 +3,14 @@
 namespace Contwise\Models;
 
 use Contwise\Contwise;
+use Contwise\Exceptions\ContwiseException;
 
 class ServicePosition extends AbstractModel
 {
     public function __construct(array $data)
     {
         parent::__construct($data);
+        $this->checkDataType();
     }
 
     public static function getByNumber($number) :self
@@ -32,5 +34,23 @@ class ServicePosition extends AbstractModel
         }
 
         return $images[0]['baseUrl'].$images[0]['file'];
+    }
+
+    public function getProperty(String $key) :mixed
+    {
+        if (!isset($this->data['properties'][$key])) {
+            throw new ContwiseException("Property with key '{$key}' not found.");
+        }
+
+        return $this->data['properties'][$key];
+    }
+
+    private function checkDataType()
+    {
+        $reflect = new \ReflectionClass($this);
+
+        if ($reflect->getShortName() !== $this->getProperty('soType')) {
+            throw new ContwiseException("Data soType '{$this->getProperty('soType')}' does not match type '{$reflect->getShortName()}'\nData:".print_r($this->data, true));
+        }
     }
 }

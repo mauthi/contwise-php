@@ -3,12 +3,14 @@
 namespace Contwise;
 
 use Contwise\Api\Connection;
-use Contwise\Resources\FeaturesResource;
+use Contwise\Resources\Feature;
+use Contwise\Resources\Medium;
+use Contwise\Resources\Protocol;
 
 class Contwise
 {
     private $connection;
-    private String $baseUrl = 'https://tirol.mapservices.eu/nefos_app/web/api/';
+    private String $baseUrl = 'https://staging-tirol.mapservices.eu/nefos_app/';
 
     public function __construct($apiKey, $editApiKey, $debug = false)
     {
@@ -25,8 +27,18 @@ class Contwise
         return new self($_ENV['CONTWISE_API_KEY'], $_ENV['CONTWISE_EDIT_API_KEY']);
     }
 
-    public static function getFeaturesResource() :FeaturesResource
+    public static function getMediumResource() :Medium
     {
-        return new FeaturesResource(self::getObject()->getConnection());
+        return new Medium(self::getObject()->getConnection());
+    }
+    
+    public static function getProtocolResource() :Protocol
+    {
+        return new Protocol(self::getObject()->getConnection());
+    }
+
+    public static function getFeaturesResource() :Feature
+    {
+        return new Feature(self::getObject()->getConnection());
     }
 }

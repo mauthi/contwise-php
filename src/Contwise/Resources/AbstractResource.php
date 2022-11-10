@@ -27,53 +27,6 @@ abstract class AbstractResource
         $this->resourceUrl = $resourceUrl;
     }
 
-    /**
-     * @return array
-     */
-    // public function getAll($filter = [])
-    // {
-    //     $limit = self::FASTBILL_LIMIT;
-    //     $offset = 0;
-    //     $result = [];
-    //     $service = $this->_service.'.get';
-    //     $resource = $this->_resource;
-
-    //     $loopCount = 0;
-    //     do {
-    //         $loopCount++;
-    //         $limitOffsetResult = $this->getResultOrDefaultValue($this->getRequest($service, $limit, $offset, $filter), $resource, []);
-    //         //echo "LoopCount {$loopCount}: Limit: $limit / Offset: $offset / Size: ".sizeof($limitOffsetResult);
-    //         $result = array_merge($result, $limitOffsetResult);
-    //         $offset += $limit;
-    //     } while (count($limitOffsetResult) > 0 && count($limitOffsetResult) == $limit);
-
-    //     return $this->filterResult($result);
-    // }
-
-    // /**
-    //  * @return array
-    //  */
-    // public function getOne($id)
-    // {
-    //     $service = $this->_service.'.get';
-    //     $resource = $this->_resource;
-    //     $filter = [];
-    //     $filter[$this->_resourceKey] = $id;
-
-    //     $response = $this->getRequest($service, 1, 0, $filter);
-    //     $result = $this->getResultOrDefaultValue($response, $resource, false);
-
-    //     if (!isset($result[0])) {
-    //         throw new FastbillException('Resource with '.$this->_resourceKey." = {$id} not found in Fastbill (Service: {$service})\nResponse: ".print_r($response, true));
-    //     }
-
-    //     if ($result[0][$this->_resourceKey] != $id) {
-    //         throw new FastbillException("Fastbill returned resource with wrong id (Service: {$service})\nResponse: ".print_r($response, true));
-    //     }
-
-    //     return $this->filterResult($result[0]);
-    // }
-
     protected function filterResult($result)
     {
         // array_walk_recursive($result, function (&$value) {
@@ -82,50 +35,6 @@ abstract class AbstractResource
 
         return $result;
     }
-
-    // /**
-    //  * @return array Array of created resource or false
-    //  */
-    // public function create(array $data)
-    // {
-    //     $service = $this->_service.'.create';
-    //     $result = $this->postRequest($service, $data);
-
-    //     if ($this->getResultOrDefaultValue($result, 'STATUS') == self::SUCCESS && $id = $this->getResultOrDefaultValue($result, $this->_resourceKey)) {
-    //         return $this->getOne($id);
-    //     }
-
-    //     return false;
-    // }
-
-    // /**
-    //  * @return array Array of updated resource or false
-    //  */
-    // public function update($id, array $data)
-    // {
-    //     $data[$this->_resourceKey] = $id;
-    //     $service = $this->_service.'.update';
-    //     $result = $this->postRequest($service, $data);
-
-    //     if ($this->getResultOrDefaultValue($result, 'STATUS') == self::SUCCESS && $id = $this->getResultOrDefaultValue($result, $this->_resourceKey)) {
-    //         return $this->getOne($id);
-    //     }
-
-    //     return false;
-    // }
-
-    // /**
-    //  * @param array $data
-    //  * @return string
-    //  */
-    // public function updateOrCreate($id, array $data)
-    // {
-    //     if (is_null($id)) {
-    //         return $this->create($data);
-    //     } else {
-    //         return $this->update($id, $data);
-    //     }
-    // }
 
     protected function getResult(array $result, String $key) :?array
     {
@@ -136,30 +45,14 @@ abstract class AbstractResource
         return null;
     }
 
-    // protected function getRequest($service, $limit = self::FASTBILL_LIMIT, $offset = 0, $filter = [])
-    // {
-    //     $requestData = ['SERVICE' => $service, 'LIMIT' => $limit, 'OFFSET' => $offset, 'FILTER' => $filter];
-
-    //     return $this->request($requestData);
-    // }
-
-    protected function postRequest(String $url, array $data)
+    protected function postRequest(String $url, array $data, array $options = [])
     {
-        return $this->request('POST', $url, $data);
+        return $this->request('POST', $url, $data, $options);
     }
 
-    protected function request(String $method, String $url, array $data) :array
+    protected function request(String $method, String $url, array $data, array $options = []) :array
     {
-        $result = $this->connection->request($method, $url, $data);
-
-        // echo '<pre>';
-        // print_r($result);
-        // die();
-        // if (isset($result['RESPONSE']['ERRORS'])) {
-        //     throw new FastbillException("Error in Fastbill Request\nRequest: ".print_r($requestData, true)."\nResult: ".print_r($result, true));
-        // }
-
-        return $result;
+        return $this->connection->request($method, $url, $data, $options);
     }
 
     private function getResultSize($response) :?int

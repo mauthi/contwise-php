@@ -62,7 +62,7 @@ class Connection
      *
      * @return \GuzzleHttp\Client
      */
-    public function getHttpClient()
+    public function getHttpClient() :GuzzleClient
     {
         if (is_null($this->httpClient)) {
             $stack = HandlerStack::create();
@@ -101,11 +101,23 @@ class Connection
     public function request(String $method, String $url, array $body = [], array $options = [])
     {
         $client = $this->getHttpClient();
+        if (!isset($options['headers']['Content-Type'])) {
+            $options['headers']['Content-Type'] = 'application/json';
+        }
         // Set headers to accept only json data.
-        $options['headers']['Content-Type'] = 'application/json';
         $options['headers']['Accept'] = 'application/json';
+        // $options['debug'] = true;
         // $options['auth'] = [$this->getOption('email'), $this->getOption('apiKey')];
-        $options['json'] = $body;
+        switch ($options['headers']['Content-Type']) {
+            case 'multipart/form-data':
+                $options['multipart'] = $body;
+                break;
+            case 'application/json';
+            default:
+                $options['json'] = $body;
+                break;
+        }
+        
         // print_r($options);
         $response = $client->request($method, $url, $options);
 

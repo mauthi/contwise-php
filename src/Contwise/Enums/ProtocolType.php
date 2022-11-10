@@ -8,15 +8,15 @@ class ProtocolType {
 	{
 	    return [
 	    	'TYPE_OK' => [
-	    		'name' => 'OK',
+	    		'name' => 'OK (Intakt)',
 	    		'public' => false,
 	    	],
 	    	'TYPE_DAMAGED' => [
-	    		'name' => 'Kaputt',
+	    		'name' => 'Leicht beschädigt',
 	    		'public' => true,
 	    	],
 	    	'TYPE_UNUSEABLE' => [
-	    		'name' => 'Nicht benutzbar',
+	    		'name' => 'Schwer beschädigt',
 	    		'public' => true,
 	    	],
 	    	'TYPE_MISSING' => [
@@ -24,19 +24,19 @@ class ProtocolType {
 	    		'public' => true,
 	    	],
 	    	'TYPE_DANGER' => [
-	    		'name' => 'Gefährlich',
+	    		'name' => 'Gefahr in Verzug',
 	    		'public' => true,
 	    	],
 	    	'TYPE_UNKNOWN' => [
-	    		'name' => 'Unbekannt',
+	    		'name' => 'Nicht bekannt',
 	    		'public' => true,
 	    	],
 	    	'TYPE_NEW' => [
-	    		'name' => 'New',
+	    		'name' => 'Neues Objekt',
 	    		'public' => false,
 	    	],
 	    	'TYPE_PLANNED_CLOSURE' => [
-	    		'name' => 'Geplante Schließung',
+	    		'name' => 'Geplante Sperre',
 	    		'public' => false,
 	    	],
 	    ];
