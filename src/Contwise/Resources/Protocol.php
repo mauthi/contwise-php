@@ -27,7 +27,7 @@ class Protocol extends AbstractResource implements ResourceInterface
     {
         $url = self::RESOURCE_URL;
 
-        $response = $this->postRequest($url, $data);      
+        $response = $this->jsonRequest($url, $data);      
         return $response;
     }
 }

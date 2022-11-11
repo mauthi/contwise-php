@@ -45,14 +45,27 @@ abstract class AbstractResource
         return null;
     }
 
-    protected function postRequest(String $url, array $data, array $options = [])
+    protected function multipartRequest(String $url, array $data, array $options = [])
     {
-        return $this->request('POST', $url, $data, $options);
+        $options['multipart'] = $data;
+        return $this->postRequest($url, $options);
     }
 
-    protected function request(String $method, String $url, array $data, array $options = []) :array
+    protected function jsonRequest(String $url, array $data, array $options = [])
     {
-        return $this->connection->request($method, $url, $data, $options);
+        $options['json'] = $data;
+        $options['headers']['Content-Type'] = 'application/json';
+        return $this->postRequest($url, $options);
+    }
+
+    private function postRequest(String $url, array $options = [])
+    {
+        return $this->request('POST', $url, $options);
+    }
+
+    private function request(String $method, String $url, array $options = []) :array
+    {
+        return $this->connection->request($method, $url, $options);
     }
 
     private function getResultSize($response) :?int

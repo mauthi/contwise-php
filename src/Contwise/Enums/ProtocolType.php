@@ -28,7 +28,7 @@ class ProtocolType {
 	    		'public' => true,
 	    	],
 	    	'TYPE_UNKNOWN' => [
-	    		'name' => 'Nicht bekannt',
+	    		'name' => 'Sonstiges',
 	    		'public' => true,
 	    	],
 	    	'TYPE_NEW' => [

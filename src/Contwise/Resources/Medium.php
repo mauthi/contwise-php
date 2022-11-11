@@ -35,6 +35,10 @@ class Medium extends AbstractResource implements ResourceInterface
             [
                 'name' => 'file',
                 'contents' => Utils::tryFopen($filePath, 'r'),
+                'filename' => $filePath,
+                'headers'  => [
+                    'Content-Type' => 'multipart/form-data'
+                ]
             ],
         ];
 
@@ -47,11 +51,8 @@ class Medium extends AbstractResource implements ResourceInterface
             'apiKey' => $this->connection->getOption('apiKey'),
             'editApiKey' => $this->connection->getOption('editApiKey'),
         ];
-        $options['headers']['Content-Type'] = 'multipart/form-data';
 
-        $response = $this->postRequest($url, $data, $options);
-        return [];
-        // echo "<pre>";
-        // print_r($response);
+        $response = $this->multipartRequest($url, $data, $options);
+        return $response[0];
     }
 }

@@ -31,7 +31,7 @@ class Feature extends AbstractResource implements ResourceInterface
             'number' => $number,
         ];
 
-        $response = $this->postRequest($url, $data);
+        $response = $this->jsonRequest($url, $data);
 
         $this->checkIfExactOneResult($response);
 

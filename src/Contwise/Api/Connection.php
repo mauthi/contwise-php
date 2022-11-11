@@ -98,27 +98,17 @@ class Connection
      * @param  array $options
      * @return array
      */
-    public function request(String $method, String $url, array $body = [], array $options = [])
+    public function request(String $method, String $url, array $options = [])
     {
         $client = $this->getHttpClient();
-        if (!isset($options['headers']['Content-Type'])) {
-            $options['headers']['Content-Type'] = 'application/json';
-        }
+
         // Set headers to accept only json data.
-        $options['headers']['Accept'] = 'application/json';
-        // $options['debug'] = true;
-        // $options['auth'] = [$this->getOption('email'), $this->getOption('apiKey')];
-        switch ($options['headers']['Content-Type']) {
-            case 'multipart/form-data':
-                $options['multipart'] = $body;
-                break;
-            case 'application/json';
-            default:
-                $options['json'] = $body;
-                break;
+        if (!isset($options['headers']['Accept'])) {
+            $options['headers']['Accept'] = 'application/json';
         }
         
-        // print_r($options);
+        // $options['debug'] = true;
+
         $response = $client->request($method, $url, $options);
 
         switch ($response->getStatusCode()) {
