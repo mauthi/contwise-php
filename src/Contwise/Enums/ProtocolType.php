@@ -58,4 +58,19 @@ class ProtocolType {
 
 		return $result;
 	}
+
+	public static function getAllData() :array 
+	{
+		$data = self::getData();
+		$result = [];
+
+		foreach ($data as $key => $value) {
+			$result[] = [
+				'const' => $key,
+				'name' => $value['name'],
+			];
+		}
+
+		return $result;
+	}
 }
