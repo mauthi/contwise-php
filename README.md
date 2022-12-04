@@ -1,15 +1,14 @@
 # Contwise PHP Library
 
-Dies ist eine kleine Library um mittels PHP mit der Contwise Maps API kommunizieren zu können.
-So können Sie mit wenigen Schritten und wenig Vorkenntnissen auf Ihre Contwise-Daten zugreifen und diese verarbeiten. 
+This is a small library to communicate with the Contwise Maps REST API using PHP. So you can access and process your Contwise data with a few steps and little previous knowledge.
 
-In der [Contwise Maps API Dokumentation](https://tirol.mapservices.eu/nefos_app/web/swagger-ui.html#/) finden Sie die Struktur der einzelnen Requests.
-
+In the [Contwise Maps REST API documentaton](https://tirol.mapservices.eu/nefos_app/web/swagger-ui.html#/) you will find the structure of the individual requests.
 
 
-## Konfiguration
 
-In Ihrem .env File bitte folgende Infos hinzufügen
+## Configuration
+
+Please add the following information to your .env file
 
 ``` php
 CONTWISE_API_KEY=xxx
@@ -18,5 +17,5 @@ CONTWISE_EDIT_API_KEY=xxx
 DEBUG=1
 ```
 
-## Weitere Infos
-Dieses Paket ist WIP.
+## Further information
+This package is WIP.
