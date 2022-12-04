@@ -1,5 +1,5 @@
 {
-    "name": "mauthi/contwise-php",
+    "name": "netwerker/contwise-php",
     "description": "API Wrapper for the Contwise Infra API",
     "type": "library",
     "require": {
