@@ -21,7 +21,7 @@ abstract class AbstractResource
      * AbstractResource constructor.
      * @param Connection $connection
      */
-    public function __construct(Connection $connection, String $resourceUrl)
+    public function __construct(Connection $connection, string $resourceUrl)
     {
         $this->connection = $connection;
         $this->resourceUrl = $resourceUrl;
@@ -36,7 +36,7 @@ abstract class AbstractResource
         return $result;
     }
 
-    protected function getResult(array $result, String $key) :?array
+    protected function getResult(array $result, string $key): ?array
     {
         if (isset($result[$key])) {
             return $result[$key];
@@ -45,33 +45,35 @@ abstract class AbstractResource
         return null;
     }
 
-    protected function multipartRequest(String $url, array $data, array $options = [])
+    protected function multipartRequest(string $url, array $data, array $options = [])
     {
         $options['multipart'] = $data;
+
         return $this->postRequest($url, $options);
     }
 
-    protected function jsonRequest(String $url, array $data, array $options = [])
+    protected function jsonRequest(string $url, array $data, array $options = [])
     {
         $options['json'] = $data;
         $options['headers']['Content-Type'] = 'application/json';
+
         return $this->postRequest($url, $options);
     }
 
-    private function postRequest(String $url, array $options = [])
+    private function postRequest(string $url, array $options = [])
     {
         return $this->request('POST', $url, $options);
     }
 
-    private function request(String $method, String $url, array $options = []) :array
+    private function request(string $method, string $url, array $options = []): array
     {
         return $this->connection->request($method, $url, $options);
     }
 
-    private function getResultSize($response) :?int
+    private function getResultSize($response): ?int
     {
-        if (isset($response['properties']['totalSize'])) {
-            return $response['properties']['totalSize'];
+        if (isset($response['features'])) {
+            return count($response['features']);
         }
 
         return null;
