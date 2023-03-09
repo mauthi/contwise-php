@@ -3,7 +3,7 @@
 namespace Contwise\Resources;
 
 use Contwise\Api\Connection;
-use Contwise\Exceptions\ContwiseException;
+use Contwise\Exceptions\ContwiseResponseException;
 
 /**
  * Class Features.
@@ -24,7 +24,7 @@ class Feature extends AbstractResource implements ResourceInterface
         parent::__construct($connection, self::RESOURCE_URL);
     }
 
-    public function getByNumber(String $number) :array
+    public function getByNumber(string $number): array
     {
         $url = self::RESOURCE_URL;
         $data = [
@@ -38,8 +38,8 @@ class Feature extends AbstractResource implements ResourceInterface
         // print_r($response);
         $result = $this->getResult($response, self::RESOURCE_KEY, false);
 
-        if (!isset($result[0])) {
-            throw new ContwiseException("Feature with number = {$number} not found in Contwise\nResponse: ".print_r($response, true));
+        if (! isset($result[0])) {
+            throw new ContwiseResponseException("Feature with number = {$number} not found in Contwise\nResponse: ".print_r($response, true));
         }
 
         return $this->filterResult($result[0]);

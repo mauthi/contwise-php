@@ -3,7 +3,7 @@
 namespace Contwise\Exceptions;
 
 /**
- * Class ContwiseResponseException‚.
+ * Class ContwiseResponseException.
  *
  * @namespace    Contwise\Exceptions
  * @author     Mauthi <mauthi@gmail.com>

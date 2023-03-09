@@ -3,7 +3,7 @@
 namespace Contwise\Resources;
 
 use Contwise\Api\Connection;
-use Contwise\Exceptions\ContwiseException;
+use Contwise\Exceptions\ContwiseResponseException;
 
 /**
  * Class AbstractResource.
@@ -82,7 +82,7 @@ abstract class AbstractResource
     protected function checkIfExactOneResult($response)
     {
         if ($this->getResultSize($response) !== 1) {
-            throw new ContwiseException("0 or more than 1 results found\nResponse: ".print_r($response, true));
+            throw new ContwiseResponseException("0 or more than 1 results found\nResponse: ".print_r($response, true));
         }
     }
 }
