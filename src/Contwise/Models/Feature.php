@@ -3,6 +3,7 @@
 namespace Contwise\Models;
 
 use Contwise\Contwise;
+use Contwise\Enums\FeatureType;
 use Contwise\Exceptions\ContwiseException;
 
 class Feature extends AbstractModel
@@ -21,9 +22,19 @@ class Feature extends AbstractModel
         return new self($result);
     }
 
-    public function getName(): string
+    public function getFullName(): string
     {
         return $this->getProperty('fullName');
+    }
+
+    public function getName(): string
+    {
+        return $this->getProperty('name');
+    }
+
+    public function getFeatureType(): string
+    {
+        return $this->getProperty('soType');
     }
 
     public function getFirstImageUrl(?string $default = null): ?string
@@ -47,10 +58,7 @@ class Feature extends AbstractModel
 
     private function checkDataType()
     {
-        $allowedTypes = [
-            'ServicePosition',
-            'ServicePath',
-        ];
+        $allowedTypes = FeatureType::getKeys();
 
         if (! in_array($this->getProperty('soType'), $allowedTypes)) {
             throw new ContwiseException("Data soType '{$this->getProperty('soType')}' does not match one of the allowed types (".implode(',', $allowedTypes).")'\nData:".print_r($this->data, true));

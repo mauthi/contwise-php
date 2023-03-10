@@ -2,8 +2,6 @@
 
 namespace Contwise\Models;
 
-use Contwise\Exceptions\ContwiseException;
-
 abstract class AbstractModel
 {
     protected array $data;
@@ -11,18 +9,15 @@ abstract class AbstractModel
     public function __construct(array $data)
     {
         $this->data = $data;
-        
     }
 
-    public function getId() :int
+    public function getId(): int
     {
         return $this->data['id'];
     }
 
-    public function getData() :array
+    public function getData(): array
     {
-        return $data;
+        return $this->data;
     }
-
-
 }
