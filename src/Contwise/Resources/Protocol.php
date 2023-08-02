@@ -12,7 +12,7 @@ use Contwise\Api\Connection;
  */
 class Protocol extends AbstractResource implements ResourceInterface
 {
-    public const RESOURCE_URL = 'web/api/trackmanagement/protocol/edit/';
+    const RESOURCE_URL = 'web/api/trackmanagement/protocol/edit/';
 
     /**
      * @param Connection $connection
