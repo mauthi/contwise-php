@@ -11,10 +11,10 @@ class Protocol extends AbstractModel
         parent::__construct($data);
     }
 
-    public static function upload(array $data) :self
+    public static function upload(array $data, int $memberGroupId): self
     {
         $endpoint = Contwise::getProtocolResource();
-        $result = $endpoint->upload($data);
+        $result = $endpoint->upload($data, $memberGroupId);
 
         return new self($result);
     }

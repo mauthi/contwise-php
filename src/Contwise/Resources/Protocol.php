@@ -12,7 +12,7 @@ use Contwise\Api\Connection;
  */
 class Protocol extends AbstractResource implements ResourceInterface
 {
-    const RESOURCE_URL = 'web/api/trackmanagement/protocol/edit/';
+    public const RESOURCE_URL = 'web/api/trackmanagement/protocol/edit/';
 
     /**
      * @param Connection $connection
@@ -28,7 +28,7 @@ class Protocol extends AbstractResource implements ResourceInterface
 
         $options['headers']['Member-Group-Id'] = $memberGroupId;
 
-        $response = $this->jsonRequest($url, $data);
+        $response = $this->jsonRequest($url, $data, $options);
 
         return $response;
     }
