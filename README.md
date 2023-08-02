@@ -13,6 +13,7 @@ Please add the following information to your .env file
 ``` php
 CONTWISE_API_KEY=xxx
 CONTWISE_EDIT_API_KEY=xxx
+CONTWISE_URL=xxx // https://staging-tirol.mapservices.eu/nefos_app/ OR https://tirol.mapservices.eu/nefos_app/
 
 DEBUG=1
 ```
