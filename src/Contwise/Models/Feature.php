@@ -37,6 +37,11 @@ class Feature extends AbstractModel
         return $this->getProperty('soType');
     }
 
+    public function getGroupForeignId(): string
+    {
+        return $this->getProperty('groupFid');
+    }
+
     public function getFirstImageUrl(?string $default = null): ?string
     {
         $images = $this->getProperty('images');

@@ -3,7 +3,6 @@
 namespace Contwise\Resources;
 
 use Contwise\Api\Connection;
-use Contwise\Exceptions\ContwiseException;
 
 /**
  * Class Protocol.
@@ -23,11 +22,14 @@ class Protocol extends AbstractResource implements ResourceInterface
         parent::__construct($connection, self::RESOURCE_URL);
     }
 
-    public function upload(array $data) :array
+    public function upload(array $data, int $memberGroupId): array
     {
         $url = self::RESOURCE_URL;
 
-        $response = $this->jsonRequest($url, $data);      
+        $options['headers']['Member-Group-Id'] = $memberGroupId;
+
+        $response = $this->jsonRequest($url, $data, $options);
+
         return $response;
     }
 }
