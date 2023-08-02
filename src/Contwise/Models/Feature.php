@@ -47,6 +47,21 @@ class Feature extends AbstractModel
         return $images[0]['baseUrl'].$images[0]['file'];
     }
 
+    public function getImageUrls(array $default = []): array
+    {
+        $images = $this->getProperty('images');
+        if (! isset($images[0])) {
+            return $default;
+        }
+
+        $output = [];
+        foreach ($images as $image) {
+            $output[] = $image['baseUrl'].$image['file'];
+        }
+
+        return $output;
+    }
+
     public function getProperty(string $key): mixed
     {
         if (! isset($this->data['properties'][$key])) {
