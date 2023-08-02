@@ -37,7 +37,7 @@ class Feature extends AbstractModel
         return $this->getProperty('soType');
     }
 
-    public function getGroupForeignId(): int
+    public function getGroupForeignId(): string
     {
         return $this->getProperty('groupFid');
     }
