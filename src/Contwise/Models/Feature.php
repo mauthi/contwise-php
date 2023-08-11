@@ -22,6 +22,33 @@ class Feature extends AbstractModel
         return new self($result);
     }
 
+    /**
+     * @return Feature[]
+     */
+    public static function getByLayerId(int $layerId, array $types = [FeatureType::SERVICE_PATH, FeatureType::SERVICE_POSITION]): array
+    {
+        $endpoint = Contwise::getFeaturesResource();
+        $features = $endpoint->getByLayerIds([$layerId], $types);
+        $result = [];
+
+        foreach ($features as $feature) {
+            // dump($feature);
+            $result[] = new self($feature);
+        }
+
+        return $result;
+    }
+
+    public static function getServicePathsByLayerId(int $layerId): array
+    {
+        return self::getByLayerId($layerId, [FeatureType::SERVICE_PATH]);
+    }
+
+    public static function getServicePositionsByLayerId(int $layerId): array
+    {
+        return self::getByLayerId($layerId, [FeatureType::SERVICE_POSITION]);
+    }
+
     public function getFullName(): string
     {
         return $this->getProperty('fullName');
@@ -67,13 +94,22 @@ class Feature extends AbstractModel
         return $output;
     }
 
-    public function getProperty(string $key): mixed
+    public function getProperty(string $key, bool $throwException = true, mixed $default = null): mixed
     {
         if (! isset($this->data['properties'][$key])) {
-            throw new ContwiseException("Property with key '{$key}' not found.");
+            if ($throwException) {
+                throw new ContwiseException("Property with key '{$key}' not found.");
+            } else {
+                return $default;
+            }
         }
 
         return $this->data['properties'][$key];
+    }
+
+    public function getProperties(): array
+    {
+        return $this->data['properties'];
     }
 
     private function checkDataType()

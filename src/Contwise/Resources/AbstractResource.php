@@ -14,6 +14,7 @@ use Contwise\Exceptions\ContwiseResponseException;
 abstract class AbstractResource
 {
     const SUCCESS = 'success';
+    const PAGE_SIZE = 30;
     protected Connection $connection;
     protected String $resourceUrl;
 
@@ -27,13 +28,48 @@ abstract class AbstractResource
         $this->resourceUrl = $resourceUrl;
     }
 
-    protected function filterResult($result)
+    protected function filterResult(array $result, array $unset = []): array
     {
+        $this->unsetValuesBySchema($result, $unset);
+
         // array_walk_recursive($result, function (&$value) {
         //     $value = htmlspecialchars_decode($value);
         // });
 
+        if (isset($result['properties']['creationDate'])) {
+            $result['properties']['creationDate'] = $this->transformDateTime($result['properties']['creationDate']);
+        }
+
+        if (isset($result['properties']['editDate'])) {
+            $result['properties']['editDate'] = $this->transformDateTime($result['properties']['editDate']);
+        }
+
         return $result;
+    }
+
+    private function transformDateTime(int $microseconds): \DateTime
+    {
+        $seconds = floor($microseconds / 1000); // ignore micro seconds
+
+        $date = new \DateTime("@$seconds");
+        $date->setTimezone(new \DateTimeZone(date_default_timezone_get()));
+
+        return $date;
+    }
+
+    public function unsetValuesBySchema(array &$target, array $unset): void
+    {
+        foreach ($unset as $key => $value) {
+            if (is_numeric($key) && is_string($value)) {
+                // Direkten Wert unsetten
+                unset($target[$value]);
+            } elseif (is_string($key) && is_array($value)) {
+                // Wenn der Schlüssel im Ziel-Array existiert und es sich um ein Array handelt, tauchen wir rekursiv ein
+                if (isset($target[$key]) && is_array($target[$key])) {
+                    $this->unsetValuesBySchema($target[$key], $unset[$key]);
+                }
+            }
+        }
     }
 
     protected function getResult(array $result, string $key): ?array
