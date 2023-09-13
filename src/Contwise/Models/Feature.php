@@ -2,9 +2,9 @@
 
 namespace Contwise\Models;
 
-use Contwise\Contwise;
 use Contwise\Enums\FeatureType;
 use Contwise\Exceptions\ContwiseException;
+use Contwise\Resources\Feature as ResourcesFeature;
 
 class Feature extends AbstractModel
 {
@@ -14,9 +14,8 @@ class Feature extends AbstractModel
         $this->checkDataType();
     }
 
-    public static function getByNumber($number): self
+    public static function getByNumber($number, ResourcesFeature $endpoint): self
     {
-        $endpoint = Contwise::getFeaturesResource();
         $result = $endpoint->getByNumber($number);
 
         return new self($result);
@@ -25,9 +24,8 @@ class Feature extends AbstractModel
     /**
      * @return Feature[]
      */
-    public static function getByLayerId(int $layerId, array $types = [FeatureType::SERVICE_PATH, FeatureType::SERVICE_POSITION]): array
+    public static function getByLayerId(int $layerId, array $types, ResourcesFeature $endpoint): array
     {
-        $endpoint = Contwise::getFeaturesResource();
         $features = $endpoint->getByLayerIds([$layerId], $types);
         $result = [];
 
@@ -39,14 +37,14 @@ class Feature extends AbstractModel
         return $result;
     }
 
-    public static function getServicePathsByLayerId(int $layerId): array
+    public static function getServicePathsByLayerId(int $layerId, ResourcesFeature $endpoint): array
     {
-        return self::getByLayerId($layerId, [FeatureType::SERVICE_PATH]);
+        return self::getByLayerId($layerId, [FeatureType::SERVICE_PATH], $endpoint);
     }
 
-    public static function getServicePositionsByLayerId(int $layerId): array
+    public static function getServicePositionsByLayerId(int $layerId, ResourcesFeature $endpoint): array
     {
-        return self::getByLayerId($layerId, [FeatureType::SERVICE_POSITION]);
+        return self::getByLayerId($layerId, [FeatureType::SERVICE_POSITION], $endpoint);
     }
 
     public function getFullName(): string

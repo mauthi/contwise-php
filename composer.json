@@ -5,8 +5,7 @@
     "require": {
         "php": "^8.0.3",
         "guzzlehttp/guzzle": "^7.0.1",
-        "caseyamcl/guzzle_retry_middleware": "^2.7",
-        "vlucas/phpdotenv": "^5.4.1"
+        "caseyamcl/guzzle_retry_middleware": "^2.7"
     },
     "license": "MIT",
     "autoload": {

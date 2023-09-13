@@ -2,7 +2,7 @@
 
 namespace Contwise\Models;
 
-use Contwise\Contwise;
+use Contwise\Resources\Medium as ResourcesMedium;
 
 class Medium extends AbstractModel
 {
@@ -11,9 +11,8 @@ class Medium extends AbstractModel
         parent::__construct($data);
     }
 
-    public static function upload(string $filePath, string $name) :self
+    public static function upload(string $filePath, string $name, ResourcesMedium $endpoint): self
     {
-        $endpoint = Contwise::getMediumResource();
         $result = $endpoint->upload($filePath, $name);
 
         return new self($result);

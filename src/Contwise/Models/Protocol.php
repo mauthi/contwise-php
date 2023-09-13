@@ -2,7 +2,7 @@
 
 namespace Contwise\Models;
 
-use Contwise\Contwise;
+use Contwise\Resources\Protocol as ResourcesProtocol;
 
 class Protocol extends AbstractModel
 {
@@ -11,9 +11,8 @@ class Protocol extends AbstractModel
         parent::__construct($data);
     }
 
-    public static function upload(array $data, int $memberGroupId): self
+    public static function upload(array $data, int $memberGroupId, ResourcesProtocol $endpoint): self
     {
-        $endpoint = Contwise::getProtocolResource();
         $result = $endpoint->upload($data, $memberGroupId);
 
         return new self($result);

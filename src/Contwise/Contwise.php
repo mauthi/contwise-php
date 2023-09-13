@@ -11,9 +11,8 @@ class Contwise
 {
     private $connection;
 
-    public function __construct($apiKey, $editApiKey, $debug = false)
+    public function __construct($apiKey, $editApiKey, $baseUrl, $debug = false)
     {
-        $baseUrl = $_ENV['CONTWISE_URL'];
         $this->connection = new Connection(['apiKey' => $apiKey, 'editApiKey' => $editApiKey, 'apiUrl' => $baseUrl, 'debug' => $debug]);
     }
 
@@ -22,23 +21,23 @@ class Contwise
         return $this->connection;
     }
 
-    public static function getObject(): self
+    public static function getObject($apiKey, $editApiKey, $baseUrl): self
     {
-        return new self($_ENV['CONTWISE_API_KEY'], $_ENV['CONTWISE_EDIT_API_KEY']);
+        return new self($apiKey, $editApiKey, $baseUrl);
     }
 
-    public static function getMediumResource(): Medium
+    public static function getMediumResource($apiKey, $editApiKey, $baseUrl): Medium
     {
-        return new Medium(self::getObject()->getConnection());
+        return new Medium(self::getObject($apiKey, $editApiKey, $baseUrl)->getConnection());
     }
 
-    public static function getProtocolResource(): Protocol
+    public static function getProtocolResource($apiKey, $editApiKey, $baseUrl): Protocol
     {
-        return new Protocol(self::getObject()->getConnection());
+        return new Protocol(self::getObject($apiKey, $editApiKey, $baseUrl)->getConnection());
     }
 
-    public static function getFeaturesResource(): Feature
+    public static function getFeaturesResource($apiKey, $editApiKey, $baseUrl): Feature
     {
-        return new Feature(self::getObject()->getConnection());
+        return new Feature(self::getObject($apiKey, $editApiKey, $baseUrl)->getConnection());
     }
 }
